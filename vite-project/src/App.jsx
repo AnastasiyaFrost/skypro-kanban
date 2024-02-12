@@ -1,36 +1,19 @@
 //import { useState } from 'react'
 //import reactLogo from './assets/react.svg'
 //import viteLogo from '/vite.svg'
+import PopExit from '/src/components/popups/PopExit/PopExit.jsx'
 import './App.css'
-import WelcomeMessage from "./components/WelcomeMessage";
+
 
 function App() {
  // const [count, setCount] = useState(0)
-  const userName = "Алексей";
+  
 
   return (
     <>
-      <WelcomeMessage name={userName} />
+      
       <div className="wrapper">
-        <div className="pop-exit" id="popExit">
-          <div className="pop-exit__container">
-            <div className="pop-exit__block">
-              <div className="pop-exit__ttl">
-                <h2>Выйти из аккаунта?</h2>
-              </div>
-              <form className="pop-exit__form" id="formExit" action="#">
-                <div className="pop-exit__form-group">
-                  <button className="pop-exit__exit-yes _hover01" id="exitYes">
-                    <a href="modal/signin.html">Да, выйти</a>{" "}
-                  </button>
-                  <button className="pop-exit__exit-no _hover03" id="exitNo">
-                    <a href="main.html">Нет, остаться</a>{" "}
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
+        <PopExit/>
 
         <div className="pop-new-card" id="popNewCard">
           <div className="pop-new-card__container">
