@@ -8,27 +8,34 @@ import Header from "./components/Header/Header";
 import MainContent from "./components/MainContent/MainContent";
 import "./App.css";
 import Column from "./components/Column/Column";
+import Wrapper from "./components/Wrapper/Wrapper";
+import { GlobalStyle } from "./styled/common/GlobalStyle.styled";
+import { ThemeProvider } from "styled-components";
 
 export default function App() {
+  
   return (
     <>
-      <div className="wrapper">
-        <PopExit />
+      <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+        <GlobalStyle />
+        <Wrapper>
+          <PopExit />
 
-        <PopNewCard />
+          <PopNewCard />
 
-        <PopBrowse />
+          <PopBrowse />
 
-        <Header />
+          <Header />
 
-        <MainContent>
-          <Column title={"Без статуса"} />
-          <Column title={"Нужно сделать"} />
-          <Column title={"В работе"} />
-          <Column title={"Тестирование"} />
-          <Column title={"Готово"} />
-        </MainContent>
-      </div>
+          <MainContent>
+            <Column title={"Без статуса"} />
+            <Column title={"Нужно сделать"} />
+            <Column title={"В работе"} />
+            <Column title={"Тестирование"} />
+            <Column title={"Готово"} />
+          </MainContent>
+        </Wrapper>
+      </ThemeProvider>
     </>
   );
 }

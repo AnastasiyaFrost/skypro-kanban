@@ -1,18 +1,19 @@
 import Card from "../Card/Card";
+import { ColumnCards, ColumnTitle, MainColumn } from "./Column.styled";
 
 export default function Column({ title }) {
   return (
-    <div className="main__column">
-      <div className="column__title">
+    <MainColumn>
+      <ColumnTitle>
         <p>{title}</p>
-      </div>
-      <div className="cards">
+      </ColumnTitle>
+      <ColumnCards>
         <Card topic={"Web Design"} title={"Новая задача"} />
+        <Card topic={"Без статуса"} title={"Новая задача"} />
+        <Card topic={"Web Design"} title={"Новая задача"} />
+        <Card topic={"Copywriting"} title={"Новая задача"} />
         <Card topic={"Research"} title={"Новая задача"} />
-        <Card topic={"Web Design"} title={"Новая задача"} />
-        <Card topic={"Testing"} title={"Новая задача"} />
-        <Card topic={"SMM"} title={"Новая задача"} />
-      </div>
-    </div>
+      </ColumnCards>
+    </MainColumn>
   );
 }
