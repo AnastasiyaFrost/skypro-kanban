@@ -1,12 +1,14 @@
 import Card from "../Card/Card";
+import { ColumnCards, ColumnTitle, MainColumn } from "./Column.styled";
 
 export default function Column({ title, cardList }) {
   return (
-    <div className="main__column">
-      <div className="column__title">
+    <MainColumn>
+      <ColumnTitle>
         <p>{title}</p>
-      </div>
-      <div className="cards">
+
+      </ColumnTitle>
+      <ColumnCards>
         {cardList.map((card) => (
           <Card
             key={card.id}
@@ -15,7 +17,8 @@ export default function Column({ title, cardList }) {
             date={card.date}
           />
         ))}
-      </div>
-    </div>
+      </ColumnCards>
+    </MainColumn>
+
   );
 }

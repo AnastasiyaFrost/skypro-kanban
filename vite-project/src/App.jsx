@@ -1,4 +1,4 @@
-//import { useState } from 'react'
+// import { useState } from "react";
 //import reactLogo from './assets/react.svg'
 //import viteLogo from '/vite.svg'
 import PopExit from "/src/components/popups/PopExit/PopExit.jsx";
@@ -8,8 +8,12 @@ import Header from "./components/Header/Header";
 import MainContent from "./components/MainContent/MainContent";
 import "./App.css";
 import Column from "./components/Column/Column";
+import Wrapper from "./components/Wrapper/Wrapper";
 import { cardList } from "./data";
 import { useEffect, useState } from "react";
+// import { GlobalStyle, darkTheme, lightTheme } from "./styled/common/GlobalStyle.styled";
+// import { ThemeProvider } from "styled-components";
+
 
 const statusList = [
   "Без статуса",
@@ -20,6 +24,15 @@ const statusList = [
 ];
 
 export default function App() {
+// const [theme, setTheme] = useState("light");
+// const toggleTheme = () => {
+//   if (theme === "light") {
+//     setTheme("dark");
+//   } else {
+//     setTheme("light");
+//   }
+// };
+
   const [cards, setCards] = useState(cardList);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -43,9 +56,12 @@ export default function App() {
     };
     setCards([...cards, newCard]);
   }
+
   return (
     <>
-      <div className="wrapper">
+      {/* <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+        <GlobalStyle /> */}
+      <Wrapper>
         <PopExit />
 
         <PopNewCard />
@@ -53,7 +69,6 @@ export default function App() {
         <PopBrowse />
 
         <Header onCardAdd={onCardAdd} />
-
         {isLoading ? (
           "Данные загружаются..."
         ) : (
@@ -67,7 +82,9 @@ export default function App() {
             ))}
           </MainContent>
         )}
-      </div>
+      </Wrapper>
+      {/* </ThemeProvider> */}
+
     </>
   );
 }
