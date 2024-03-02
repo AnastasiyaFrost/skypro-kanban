@@ -111,7 +111,7 @@ export const HeaderPopUserSet = styled.div`
   padding: 34px;
   text-align: center;
   z-index: 2;
-  &: target {
+  &:target {
     display: block;
   }
 `;
@@ -166,7 +166,7 @@ export const HeaderPopUserSetThemeText = styled.div`
   letter-spacing: -0.14px;
 `;
 export const HeaderPopUserSetThemeInp = styled.input`
-type="checkbox";
+
   position: relative;
   width: 24px;
   height: 13px;
