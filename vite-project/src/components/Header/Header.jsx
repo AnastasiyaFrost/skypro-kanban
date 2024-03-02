@@ -1,8 +1,13 @@
-
 import { Container } from "../../styled/common/Common.styled";
 import * as S from "./Header.styled";
 export default function Header() {
-  
+import { useState } from "react";
+
+export default function Header({onCardAdd}) {
+  const [isOpened, setIsOpened] = useState(false);
+  function togglePopup () {
+    setIsOpened ((prev) => !prev);
+  }
 
   return (
     <S.StyledHeader>
@@ -19,13 +24,14 @@ export default function Header() {
             </a>
           </S.HeaderLogo>
           <S.HeaderNav>
-            <S.HeaderBtnMainNew id="btnMainNew">
+            <S.HeaderBtnMainNew onClick={onCardAdd} id="btnMainNew">
               <S.HeaderBtnMainNewLink href="#popNewCard">
                 Создать новую задачу
               </S.HeaderBtnMainNewLink>
             </S.HeaderBtnMainNew>
-            <S.HeaderUser href="#user-set-target">Ivan Ivanov</S.HeaderUser>
-            <S.HeaderPopUserSet id="user-set-target">
+            <S.HeaderUser onClick={togglePopup} href="#user-set-target">Ivan Ivanov</S.HeaderUser>
+  {isOpened && (
+              <S.HeaderPopUserSet id="user-set-target">
               {/* <a href="">x</a> */}
               <S.HeaderPopUserSetName>Ivan Ivanov</S.HeaderPopUserSetName>
               <S.HeaderPopUserSetMail>
@@ -47,6 +53,9 @@ export default function Header() {
                 </S.HeaderPopUserSetLink>
               </S.HeaderPopUserSetBtn>
             </S.HeaderPopUserSet>
+            )}
+            
+
           </S.HeaderNav>
         </S.HeaderBlock>
       </Container>

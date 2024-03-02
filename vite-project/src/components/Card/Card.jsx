@@ -1,7 +1,9 @@
+
 import { topicHeader } from "../../lib/topic";
 import * as S from "./Card.styled";
 
-export default function Card({ topic, title }) {
+export default function Card({ topic, title, date }) {
+
   return (
     <S.CardsItem>
       <S.CardsCard>
@@ -49,8 +51,9 @@ export default function Card({ topic, title }) {
                   <rect width={13} height={13} fill="white" />
                 </clipPath>
               </defs>
+
             </S.CardDateSvg>
-            <S.CardDateValue>30.10.23</S.CardDateValue>
+            <S.CardDateValue>{date}</S.CardDateValue>
           </S.CardDate>
         </S.CardContent>
       </S.CardsCard>
