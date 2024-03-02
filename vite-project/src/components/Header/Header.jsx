@@ -1,6 +1,5 @@
 import { Container } from "../../styled/common/Common.styled";
 import * as S from "./Header.styled";
-export default function Header() {
 import { useState } from "react";
 
 export default function Header({onCardAdd}) {
@@ -30,7 +29,7 @@ export default function Header({onCardAdd}) {
               </S.HeaderBtnMainNewLink>
             </S.HeaderBtnMainNew>
             <S.HeaderUser onClick={togglePopup} href="#user-set-target">Ivan Ivanov</S.HeaderUser>
-  {isOpened && (
+            {isOpened && (
               <S.HeaderPopUserSet id="user-set-target">
               {/* <a href="">x</a> */}
               <S.HeaderPopUserSetName>Ivan Ivanov</S.HeaderPopUserSetName>
