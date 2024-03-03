@@ -28,7 +28,7 @@ export default function MainPage() {
     }
   };
 
-  const [cards, setCards] = useState(cards);
+  const [cards, setCards] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
