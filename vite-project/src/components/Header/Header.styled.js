@@ -116,7 +116,7 @@ export const HeaderPopUserSet = styled.div`
   }
 `;
 
-export const HeaderPopUserSetBtn = styled.button`
+export const HeaderPopUserSetBtn = styled.span`
   width: 72px;
   height: 30px;
   background: transparent;
@@ -128,12 +128,7 @@ export const HeaderPopUserSetBtn = styled.button`
     color: #ffffff;
   }
 `;
-export const HeaderPopUserSetLink = styled.a`
-  color: #565eef;
-  &:hover {
-    color: #ffffff;
-  }
-`;
+
 
 export const HeaderPopUserSetName = styled.p`
   color: #000;

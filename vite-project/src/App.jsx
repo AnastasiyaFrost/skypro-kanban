@@ -1,90 +1,44 @@
-// import { useState } from "react";
-//import reactLogo from './assets/react.svg'
-//import viteLogo from '/vite.svg'
-import PopExit from "/src/components/popups/PopExit/PopExit.jsx";
-import PopNewCard from "/src/components/popups/PopNewCard/PopNewCard.jsx";
-import PopBrowse from "./components/popups/PopBrowse/PopBrowse";
-import Header from "./components/Header/Header";
-import MainContent from "./components/MainContent/MainContent";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import { appRoutes } from "./lib/appRoutes";
+import Signin from "./pages/SigninPage/SigninPage";
+import Register from "./pages/SignupPage/SignupPage";
+import NotFound from "./pages/NotFoundPage/NotFoundPage";
+import { useState } from "react";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import MainPage from "./pages/MainPage/MainPage";
+import TaskPage from "./pages/TaskPage/TaskPage";
+import ExitPage from "./pages/ExitPage/ExitPage";
 import "./App.css";
-import Column from "./components/Column/Column";
-import Wrapper from "./components/Wrapper/Wrapper";
-import { cardList } from "./data";
-import { useEffect, useState } from "react";
-// import { GlobalStyle, darkTheme, lightTheme } from "./styled/common/GlobalStyle.styled";
-// import { ThemeProvider } from "styled-components";
-
-
-const statusList = [
-  "Без статуса",
-  "Нужно сделать",
-  "В работе",
-  "Тестирование",
-  "Готово",
-];
 
 export default function App() {
-// const [theme, setTheme] = useState("light");
-// const toggleTheme = () => {
-//   if (theme === "light") {
-//     setTheme("dark");
-//   } else {
-//     setTheme("light");
-//   }
-// };
-
-  const [cards, setCards] = useState(cardList);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000); // 2 секунды задержки
-  }, []);
-
-  function onCardAdd() {
-    const newCard = {
-      id: cards.length + 1,
-
-      theme: "Web Design",
-
-      title: "Название задачи",
-
-      date: "30.10.23",
-
-      status: "Без статуса",
-    };
-    setCards([...cards, newCard]);
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+  function loginUser(newUser) {
+    setUser(newUser);
+    navigate(appRoutes.MAIN);
   }
-
+  function logout() {
+    setUser(null);
+    navigate(appRoutes.SIGNIN);
+  }
   return (
-    <>
-      {/* <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
-        <GlobalStyle /> */}
-      <Wrapper>
-        <PopExit />
+    <Routes>
+      <Route element={<PrivateRoute user={user} />}>
+        <Route path={appRoutes.MAIN} element={<MainPage user={user} />}>
+          <Route path={appRoutes.TASK} element={<TaskPage />} />
+          <Route path={appRoutes.EXIT} element={<ExitPage logout={logout} />} />
+        </Route>
+      </Route>
 
-        <PopNewCard />
-
-        <PopBrowse />
-
-        <Header onCardAdd={onCardAdd} />
-        {isLoading ? (
-          "Данные загружаются..."
-        ) : (
-          <MainContent>
-            {statusList.map((status) => (
-              <Column
-                title={status}
-                key={status}
-                cardList={cards.filter((card) => card.status === status)}
-              />
-            ))}
-          </MainContent>
-        )}
-      </Wrapper>
-      {/* </ThemeProvider> */}
-
-    </>
+      <Route
+        path={appRoutes.SIGNIN}
+        element={<Signin loginUser={loginUser} />}
+      />
+      <Route
+        path={appRoutes.SIGNUP}
+        element={<Register loginUser={loginUser} />}
+      />
+      <Route path={appRoutes.NOT_FOUND} element={<NotFound />} />
+    </Routes>
   );
 }
