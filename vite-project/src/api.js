@@ -47,7 +47,7 @@ export function signin({ login, password }) {
     if (response.status === 400) {
       throw new Error("Неверный логин или пароль");
     }
-    
+
     return response.json();
   });
 }

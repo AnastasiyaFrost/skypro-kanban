@@ -1,10 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Wrapper from "../../components/Wrapper/Wrapper";
 import { appRoutes } from "../../lib/appRoutes";
 import { signup } from "../../api";
 import { useState } from "react";
+import { useUser } from "../../hooks/useUser";
 
-export default function Register({ loginUser }) {
+export default function Register() {
+  const { login } = useUser();
+  const navigate = useNavigate();
   const [registerData, setregisterData] = useState({
     login: "",
     name: "",
@@ -22,13 +25,13 @@ export default function Register({ loginUser }) {
     e.preventDefault();
     await signup(registerData)
       .then((responseData) => {
-        loginUser(responseData.user);
+        login(responseData.user);
+        navigate(appRoutes.MAIN);
       })
       .catch((error) => {
         alert(error.message + ": попробуйте повторить запрос");
       });
   };
-  
 
   return (
     <Wrapper>
@@ -67,7 +70,7 @@ export default function Register({ loginUser }) {
                 placeholder="Пароль"
               />
               <button
-              onClick={handleRegister}
+                onClick={handleRegister}
                 className="modal__btn-signup-ent _hover01"
                 id="SignUpEnter"
               >

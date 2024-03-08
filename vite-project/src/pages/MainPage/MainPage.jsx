@@ -8,6 +8,8 @@ import MainContent from "../../components/MainContent/MainContent";
 import Column from "../../components/Column/Column";
 import { Outlet } from "react-router-dom";
 import { getTodos } from "../../api";
+import { useUser } from "../../hooks/useUser";
+import PopNewCard from "../../components/popups/PopNewCard/PopNewCard";
 // import { GlobalStyle, darkTheme, lightTheme } from "./styled/common/GlobalStyle.styled";
 // import { ThemeProvider } from "styled-components";
 
@@ -19,7 +21,8 @@ const statusList = [
   "Готово",
 ];
 
-export default function MainPage({user}) {
+export default function MainPage() {
+  const { user } = useUser();
   const [theme, setTheme] = useState("light");
   const toggleTheme = () => {
     if (theme === "light") {
@@ -33,15 +36,18 @@ export default function MainPage({user}) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getTodos({token: user.token}).then((todos) => {
-      setCards(todos.tasks);
-      setIsLoading(false);
-    }).catch((error) => {
-      alert(error.message)
-    })
+    getTodos({ token: user.token })
+      .then((todos) => {
+        setCards(todos.tasks);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
   }, [user]);
 
   function onCardAdd() {
+    <PopNewCard/>
     const newCard = {
       id: cards.length + 1,
       theme: "Web Design",
