@@ -1,24 +1,31 @@
 import { Link, useParams } from "react-router-dom";
 import { appRoutes } from "../../../lib/appRoutes";
+import { useTasks } from "../../../hooks/useTasks";
+import { useState } from "react";
+import Calendar from "../../Calendar/Calendar";
 
 export default function PopBrowse() {
   const { id } = useParams();
+  const {cards} = useTasks();
+  
+  const poppingTask = cards.find((card) => card._id == id);
+  const [selectedDate, setSelectedDate] = useState(poppingTask.date);
   return (
     <div className="pop-browse" id="popBrowse">
       <div className="pop-browse__container">
         <div className="pop-browse__block">
           <div className="pop-browse__content">
             <div className="pop-browse__top-block">
-              <h3 className="pop-browse__ttl">Название задачи: {id}</h3>
-              <div className="categories__theme theme-top _orange _active-category">
-                <p className="_orange">Web Design</p>
+              <h3 className="pop-browse__ttl">{poppingTask.title}</h3>
+              <div className="categories__theme theme-top _active-category" >
+                <p className="_orange">{poppingTask.topic}</p>
               </div>
             </div>
             <div className="pop-browse__status status">
               <p className="status__p subttl">Статус</p>
               <div className="status__themes">
                 <div className="status__theme _hide">
-                  <p>Без статуса</p>
+                  <p>{poppingTask.status}</p>
                 </div>
                 <div className="status__theme _gray">
                   <p className="_gray">Нужно сделать</p>
@@ -50,11 +57,15 @@ export default function PopBrowse() {
                     id="textArea01"
                     readOnly=""
                     placeholder="Введите описание задачи..."
-                    defaultValue={""}
+                    defaultValue={poppingTask.description}
                   ></textarea>
                 </div>
               </form>
-              <div className="pop-new-card__calendar calendar">
+              <Calendar
+                selectedDate={selectedDate}
+                setSelectedDate={setSelectedDate}
+              />
+              {/* <div className="pop-new-card__calendar calendar">
                 <p className="calendar__ttl subttl">Даты</p>
                 <div className="calendar__block">
                   <div className="calendar__nav">
@@ -155,7 +166,7 @@ export default function PopBrowse() {
                     </p>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
             <div className="theme-down__categories theme-down">
               <p className="categories__p subttl">Категория</p>
@@ -172,9 +183,11 @@ export default function PopBrowse() {
                   <a href="#">Удалить задачу</a>
                 </button>
               </div>
-              <button className="btn-browse__close _btn-bg _hover01">
-                <a href="#">Закрыть</a>
-              </button>
+              <Link to={appRoutes.MAIN}>
+                <span className="btn-edit__close _btn-bg _hover01">
+                  Закрыть
+                </span>
+              </Link>
             </div>
             <div className="pop-browse__btn-edit _hide">
               <div className="btn-group">
@@ -191,11 +204,6 @@ export default function PopBrowse() {
                   <a href="#">Удалить задачу</a>
                 </button>
               </div>
-              <Link to={appRoutes.MAIN}>
-                <span className="btn-edit__close _btn-bg _hover01">
-                  Закрыть
-                </span>
-              </Link>
             </div>
           </div>
         </div>

@@ -1,10 +1,8 @@
-
 import { Link } from "react-router-dom";
 import { topicHeader } from "../../lib/topic";
 import * as S from "./Card.styled";
 
 export default function Card({ id, topic, title, date }) {
-
   return (
     <Link to={`task/${id}`}>
       <S.CardsItem>

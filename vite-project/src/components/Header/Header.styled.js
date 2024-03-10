@@ -36,7 +36,7 @@ export const HeaderNav = styled.nav`
   justify-content: center;
 `;
 
-export const HeaderBtnMainNew = styled.button`
+export const HeaderMainNewCard = styled.div`
   width: 178px;
   height: 30px;
   border-radius: 4px;
@@ -63,7 +63,7 @@ export const HeaderBtnMainNew = styled.button`
   }
 `;
 
-export const HeaderBtnMainNewLink = styled.a`
+export const HeaderBtnMainNewCardText = styled.p`
   color: #ffffff;
 `;
 

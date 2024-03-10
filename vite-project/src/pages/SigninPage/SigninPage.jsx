@@ -1,10 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Wrapper from "../../components/Wrapper/Wrapper";
 import { appRoutes } from "../../lib/appRoutes";
 import { useState } from "react";
 import { signin } from "../../api";
+import { useUser } from "../../hooks/useUser";
 
-export default function Signin({loginUser}) {
+export default function Signin() {
+  const { login } = useUser();
+  const navigate = useNavigate();
   const [loginData, setLoginData] = useState({ login: "", password: "" });
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -16,11 +19,14 @@ export default function Signin({loginUser}) {
   };
   const handleLogin = async (e) => {
     e.preventDefault();
-    await signin(loginData).then((responseData) => {
-      loginUser(responseData.user);
-    }).catch((error)=>{
-      alert(error.message + ": попробуйте повторить запрос")
-    });
+    await signin(loginData)
+      .then((responseData) => {
+        login(responseData.user);
+        navigate(appRoutes.MAIN);
+      })
+      .catch((error) => {
+        alert(error.message + ": попробуйте повторить запрос");
+      });
   };
   return (
     <Wrapper>
