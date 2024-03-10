@@ -11,6 +11,7 @@ import "./App.css";
 import NewTaskPage from "./pages/NewTaskPage/NewTaskPage";
 
 export default function App() {
+  
   return (
     <Routes>
       <Route element={<PrivateRoute />}>

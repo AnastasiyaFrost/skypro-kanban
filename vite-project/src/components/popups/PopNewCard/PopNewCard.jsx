@@ -2,14 +2,20 @@ import { useState } from "react";
 import Calendar from "../../Calendar/Calendar";
 import { Link } from "react-router-dom";
 import { appRoutes } from "../../../lib/appRoutes";
+import { postTodo } from "../../../api";
+import { useUser } from "../../../hooks/useUser";
+import { useTasks } from "../../../hooks/useTasks";
 
 export default function PopNewCard() {
   const [newTask, setNewTask] = useState({
     title: "",
     description: "",
-    topic: ""
+    topic: "",
+    date: ""
 });
  const [selectedDate, setSelectedDate] = useState(null);
+ const { user } = useUser();
+ const { setCards, setIsLoading } = useTasks();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -25,6 +31,17 @@ export default function PopNewCard() {
 ...newTask, date: selectedDate
     };
     console.log({ taskData });
+    
+  postTodo({ token: user.token }, taskData)
+      .then((todos) => {
+        console.log(todos.tasks)
+          setCards(todos.tasks);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    
   };
 
   return (
@@ -33,9 +50,9 @@ export default function PopNewCard() {
         <div className="pop-new-card__block">
           <div className="pop-new-card__content">
             <h3 className="pop-new-card__ttl">Создание задачи</h3>
-            <a href="#" className="pop-new-card__close">
+            <Link to={appRoutes.MAIN} className="pop-new-card__close">
               &#10006;
-            </a>
+            </Link>
             <div className="pop-new-card__wrap">
               <form
                 className="pop-new-card__form form-new"

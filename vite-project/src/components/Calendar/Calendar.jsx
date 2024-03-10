@@ -3,7 +3,7 @@ import ru from "date-fns/locale/ru";
 import { format } from 'date-fns';
 import { DayPicker } from 'react-day-picker';
 
-export default function Calendar(selectedDate, setSelectedDate) {
+export default function Calendar({selectedDate, setSelectedDate}) {
  
 
   let footer = <p>Пожалуйста, выберите дату.</p>;

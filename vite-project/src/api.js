@@ -18,20 +18,26 @@ export async function getTodos({ token }) {
 }
 
 //Добавить задачу в список
-export async function postTodo({ token }, text) {
+export async function postTodo({ token }, taskData) {
   const response = await fetch(baseHost, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
     method: "POST",
     body: JSON.stringify({
-      text,
+      title: taskData.title,
+      topic: taskData.topic,
+      status: taskData.status,
+      description: taskData.description,
+      date: taskData.date,
     }),
   });
 
   if (!response.status === 200) {
     throw new Error("Ошибка");
   }
+  const data = await response.json();
+  return data;
 }
 
 //Войти
