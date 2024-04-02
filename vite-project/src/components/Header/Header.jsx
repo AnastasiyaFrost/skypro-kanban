@@ -4,7 +4,7 @@ import * as S from "./Header.styled";
 import { useState } from "react";
 import { appRoutes } from "../../lib/appRoutes";
 
-export default function Header({onCardAdd}) {
+export default function Header() {
   const [isOpened, setIsOpened] = useState(false);
   function togglePopup () {
     setIsOpened ((prev) => !prev);
@@ -25,11 +25,13 @@ export default function Header({onCardAdd}) {
             </a>
           </S.HeaderLogo>
           <S.HeaderNav>
-            <S.HeaderBtnMainNew onClick={onCardAdd} id="btnMainNew">
-              <S.HeaderBtnMainNewLink href="#popNewCard">
-                Создать новую задачу
-              </S.HeaderBtnMainNewLink>
-            </S.HeaderBtnMainNew>
+            <Link to={"/task/add"}>
+              <S.HeaderMainNewCard id="btnMainNew">
+                <S.HeaderBtnMainNewCardText>
+                  Создать новую задачу
+                </S.HeaderBtnMainNewCardText>
+              </S.HeaderMainNewCard>
+            </Link>
             <S.HeaderUser onClick={togglePopup} href="#user-set-target">
               Ivan Ivanov
             </S.HeaderUser>
@@ -51,9 +53,7 @@ export default function Header({onCardAdd}) {
                   />
                 </S.HeaderPopUserSetTheme>
                 <Link to={appRoutes.EXIT}>
-                  <S.HeaderPopUserSetBtn>
-                    Выйти
-                  </S.HeaderPopUserSetBtn>
+                  <S.HeaderPopUserSetBtn>Выйти</S.HeaderPopUserSetBtn>
                 </Link>
               </S.HeaderPopUserSet>
             )}
