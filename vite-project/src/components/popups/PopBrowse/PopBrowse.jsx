@@ -1,15 +1,75 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, Navigate } from "react-router-dom";
 import { appRoutes } from "../../../lib/appRoutes";
 import { useTasks } from "../../../hooks/useTasks";
 import { useState } from "react";
 import Calendar from "../../Calendar/Calendar";
+import { deleteTodo, editTodo } from "../../../api";
+import { useUser } from "../../../hooks/useUser";
+import { topicHeader } from "../../../lib/topic";
+import { CardTopic } from "../../Card/Card.styled";
 
 export default function PopBrowse() {
+  const { cards, setCards, setIsLoading } = useTasks();
   const { id } = useParams();
-  const {cards} = useTasks();
-  
   const poppingTask = cards.find((card) => card._id == id);
+  // if (!poppingTask) {
+  //   return <Navigate to={appRoutes.MAIN} />;
+  // }
+  const { user } = useUser();
+  
+  
+  const [newTask, setNewTask] = useState({
+    title: poppingTask.title,
+    description: poppingTask.description,
+    topic: poppingTask.topic,
+    date: poppingTask.date,
+  });
+  const [isEdit, setIsEdit] = useState(false);
   const [selectedDate, setSelectedDate] = useState(poppingTask.date);
+
+ 
+  
+const handleInputChange = (e) => {
+  const { name, value } = e.target;
+
+  setNewTask({
+    ...newTask,
+    [name]: value,
+  });
+};
+const handleFormSubmit = async (e) => {
+  e.preventDefault();
+  const taskData = {
+    ...newTask,
+    date: selectedDate,
+  };
+  console.log({ taskData });
+
+  await editTodo({ token: user.token }, taskData)
+    .then((todos) => {
+      console.log(todos.tasks);
+      setCards(todos.tasks);
+      setIsLoading(false);
+      Navigate(appRoutes.MAIN)
+    })
+    .catch((error) => {
+      alert(error.message);
+    });
+};
+
+const handleTaskDelete = async (e) => {
+  e.preventDefault();
+  await deleteTodo({ token: user.token }, id)
+    .then((todos) => {
+      console.log("После удаления задачи список: "+ todos.tasks);
+      setCards(todos.tasks);
+      <Navigate to={appRoutes.MAIN} />
+    })
+    .catch((error) => {
+      alert(error.message);
+    });
+}
+
   return (
     <div className="pop-browse" id="popBrowse">
       <div className="pop-browse__container">
@@ -17,29 +77,33 @@ export default function PopBrowse() {
           <div className="pop-browse__content">
             <div className="pop-browse__top-block">
               <h3 className="pop-browse__ttl">{poppingTask.title}</h3>
-              <div className="categories__theme theme-top _active-category" >
-                <p className="_orange">{poppingTask.topic}</p>
+              <div className="categories__theme theme-top _active-category">
+                <CardTopic $themeColor={topicHeader[poppingTask.topic]}>
+                  {poppingTask.topic}
+                </CardTopic>
               </div>
             </div>
             <div className="pop-browse__status status">
               <p className="status__p subttl">Статус</p>
-              <div className="status__themes">
-                <div className="status__theme _hide">
-                  <p>{poppingTask.status}</p>
+              {isEdit && (
+                <div className="status__themes">
+                  <div className="status__theme">
+                    <p>{poppingTask.status}</p>
+                  </div>
+                  <div className="status__theme _gray">
+                    <p className="_gray">Нужно сделать</p>
+                  </div>
+                  <div className="status__theme">
+                    <p>В работе</p>
+                  </div>
+                  <div className="status__theme">
+                    <p>Тестирование</p>
+                  </div>
+                  <div className="status__theme">
+                    <p>Готово</p>
+                  </div>
                 </div>
-                <div className="status__theme _gray">
-                  <p className="_gray">Нужно сделать</p>
-                </div>
-                <div className="status__theme _hide">
-                  <p>В работе</p>
-                </div>
-                <div className="status__theme _hide">
-                  <p>Тестирование</p>
-                </div>
-                <div className="status__theme _hide">
-                  <p>Готово</p>
-                </div>
-              </div>
+              )}
             </div>
             <div className="pop-browse__wrap">
               <form
@@ -53,11 +117,12 @@ export default function PopBrowse() {
                   </label>
                   <textarea
                     className="form-browse__area"
-                    name="text"
+                    name="description"
+                    onChange={handleInputChange}
                     id="textArea01"
-                    readOnly=""
+                    // readOnly=""
+                    value={newTask.description}
                     placeholder="Введите описание задачи..."
-                    defaultValue={poppingTask.description}
                   ></textarea>
                 </div>
               </form>
@@ -176,34 +241,64 @@ export default function PopBrowse() {
             </div>
             <div className="pop-browse__btn-browse ">
               <div className="btn-group">
-                <button className="btn-browse__edit _btn-bor _hover03">
-                  <a href="#">Редактировать задачу</a>
-                </button>
-                <button className="btn-browse__delete _btn-bor _hover03">
-                  <a href="#">Удалить задачу</a>
-                </button>
-              </div>
-              <Link to={appRoutes.MAIN}>
-                <span className="btn-edit__close _btn-bg _hover01">
-                  Закрыть
-                </span>
-              </Link>
-            </div>
-            <div className="pop-browse__btn-edit _hide">
-              <div className="btn-group">
-                <button className="btn-edit__edit _btn-bg _hover01">
-                  <a href="#">Сохранить</a>
-                </button>
-                <button className="btn-edit__edit _btn-bor _hover03">
-                  <a href="#">Отменить</a>
+                <button className="_btn-bor _hover03" onClick={setIsEdit(true)}>
+                  Редактировать задачу
                 </button>
                 <button
-                  className="btn-edit__delete _btn-bor _hover03"
-                  id="btnDelete"
+                  className="_btn-bor _hover03"
+                  onClick={handleTaskDelete}
                 >
-                  <a href="#">Удалить задачу</a>
+                  Удалить задачу
                 </button>
               </div>
+              {isEdit && (
+                <div className="pop-browse__btn-edit">
+                  <div className="btn-group">
+                    <button
+                      className="_btn-bg _hover01"
+                      onClick={() => {
+                        handleFormSubmit;
+                      }}
+                    >
+                      Сохранить
+                    </button>
+                    <button
+                      className="_btn-bor _hover03"
+                      onClick={Navigate(appRoutes.MAIN)}
+                    >
+                      Отменить
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* <div className="btn-group">
+                <button className="_btn-bg _hover01" 
+                onClick={() => {
+                      handleFormSubmit;
+                      setIsEdit(false);
+                    }}>
+                  Сохранить
+                </button>
+                <button className="_btn-bor _hover03" 
+                onClick={setIsEdit(false)}>
+                  Отменить
+                </button>
+                </div> */}
+
+              {/* //   <button
+                //     className="_btn-bor _hover03"
+                //     onClick={() => {
+                //       handleFormSubmit;
+                //       setIsEdit(false);
+                //     }}
+                //   >
+                //     Сохранить задачу
+                //   </button> */}
+
+              <Link to={appRoutes.MAIN}>
+                <span className="_btn-bg _hover01">Закрыть</span>
+              </Link>
             </div>
           </div>
         </div>

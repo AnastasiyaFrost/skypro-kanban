@@ -47,6 +47,7 @@ body {
 
 
 
+/* в common.styled.js
 ._hover01:hover {
   background-color: #33399b;
 }
@@ -67,7 +68,7 @@ body {
 
 ._hover03:hover a {
   color: #FFFFFF;
-}
+} */
 
 .pop-user-set:target,
 .pop-exit:target,

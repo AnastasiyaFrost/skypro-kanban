@@ -11,11 +11,11 @@ export default function PopNewCard() {
     title: "",
     description: "",
     topic: "",
-    date: ""
-});
- const [selectedDate, setSelectedDate] = useState(null);
- const { user } = useUser();
- const { setCards, setIsLoading } = useTasks();
+    date: "",
+  });
+  const [selectedDate, setSelectedDate] = useState(null);
+  const { user } = useUser();
+  const { setCards, setIsLoading } = useTasks();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -25,23 +25,23 @@ export default function PopNewCard() {
       [name]: value,
     });
   };
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     const taskData = {
-...newTask, date: selectedDate
+      ...newTask,
+      date: selectedDate,
     };
     console.log({ taskData });
-    
-  postTodo({ token: user.token }, taskData)
+
+    await postTodo({ token: user.token }, taskData)
       .then((todos) => {
-        console.log(todos.tasks)
-          setCards(todos.tasks);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          alert(error.message);
-        });
-    
+        console.log(todos.tasks);
+        setCards(todos.tasks);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
   };
 
   return (
@@ -145,7 +145,7 @@ export default function PopNewCard() {
               Создать задачу
             </button>
             <Link to={appRoutes.MAIN}>
-              <span className="btn-edit__close _btn-bg _hover01">Закрыть</span>
+              <span className="_btn-bg _hover01">Закрыть</span>
             </Link>
           </div>
         </div>

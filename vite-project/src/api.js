@@ -33,7 +33,46 @@ export async function postTodo({ token }, taskData) {
     }),
   });
 
-  if (!response.status === 200) {
+  if (!response.status === 201) {
+    throw new Error("Ошибка");
+  }
+  const data = await response.json();
+  return data;
+}
+
+//Изменить задачу
+export async function editTodo({ token }, taskData) {
+  const response = await fetch(baseHost +`/${taskData._id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    method: "PUT",
+    body: JSON.stringify({
+      title: taskData.title,
+      topic: taskData.topic,
+      status: taskData.status,
+      description: taskData.description,
+      date: taskData.date,
+    }),
+  });
+
+  if (!response.status === 201) {
+    throw new Error("Ошибка");
+  }
+  const data = await response.json();
+  return data;
+}
+
+//Удалить задачу
+export async function deleteTodo({ token }, id) {
+  const response = await fetch(baseHost +`/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    method: "DELETE"
+  });
+
+  if (!response.status === 201) {
     throw new Error("Ошибка");
   }
   const data = await response.json();
