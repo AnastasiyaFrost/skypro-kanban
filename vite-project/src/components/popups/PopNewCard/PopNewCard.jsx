@@ -5,6 +5,7 @@ import { appRoutes } from "../../../lib/appRoutes";
 import { postTodo } from "../../../api";
 import { useUser } from "../../../hooks/useUser";
 import { useTasks } from "../../../hooks/useTasks";
+import { useNavigate } from "react-router-dom";
 
 export default function PopNewCard() {
   const [newTask, setNewTask] = useState({
@@ -16,6 +17,7 @@ export default function PopNewCard() {
   const [selectedDate, setSelectedDate] = useState(null);
   const { user } = useUser();
   const { setCards, setIsLoading } = useTasks();
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -38,6 +40,7 @@ export default function PopNewCard() {
         console.log(todos.tasks);
         setCards(todos.tasks);
         setIsLoading(false);
+        navigate(appRoutes.MAIN)
       })
       .catch((error) => {
         alert(error.message);
@@ -93,8 +96,9 @@ export default function PopNewCard() {
                 setSelectedDate={setSelectedDate}
               />
             </div>
-            <div className="prod_checbox">
-              <div className="radio-toolbar">
+            <div className="pop-new-card__categories categories">
+              <p className="categories__p subttl">Категория</p>
+              <div className="categories__themes">
                 <input
                   type="radio"
                   id="radio1"
@@ -102,7 +106,9 @@ export default function PopNewCard() {
                   value="Web Design"
                   onChange={handleInputChange}
                 />
-                <label htmlFor="radio1">Web Design</label>
+                <label htmlFor="radio1" className="categories__theme _orange">
+                  Web Design
+                </label>
 
                 <input
                   type="radio"
@@ -111,7 +117,9 @@ export default function PopNewCard() {
                   value="Research"
                   onChange={handleInputChange}
                 />
-                <label htmlFor="radio2">Research</label>
+                <label htmlFor="radio2" className="categories__theme _green">
+                  Research
+                </label>
 
                 <input
                   type="radio"
@@ -120,12 +128,13 @@ export default function PopNewCard() {
                   value="Copywriting"
                   onChange={handleInputChange}
                 />
-                <label htmlFor="radio3">Copywriting</label>
+                <label htmlFor="radio3" className="categories__theme _purple">
+                  Copywriting
+                </label>
               </div>
             </div>
-            {/* <div className="pop-new-card__categories categories">
-                <p className="categories__p subttl">Категория</p>
-                <div className="categories__themes">
+            {/* 
+                
                   <div className="categories__theme _orange _active-category">
                     <p className="_orange">Web Design</p>
                   </div>
@@ -140,7 +149,6 @@ export default function PopNewCard() {
             <button
               onClick={handleFormSubmit}
               className="form-new__create _hover01"
-              id="btnCreate"
             >
               Создать задачу
             </button>
