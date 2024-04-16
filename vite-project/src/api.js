@@ -41,7 +41,7 @@ export async function postTodo({ token }, taskData) {
 }
 
 //Изменить задачу
-export async function editTodo({ token }, taskData) {
+export async function editTodo({ token }, {taskData}) {
   const response = await fetch(baseHost +`/${taskData._id}`, {
     headers: {
       Authorization: `Bearer ${token}`,

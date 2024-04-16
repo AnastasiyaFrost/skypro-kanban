@@ -1,9 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
-import Wrapper from "../../components/Wrapper/Wrapper";
 import { appRoutes } from "../../lib/appRoutes";
 import { signup } from "../../api";
 import { useState } from "react";
 import { useUser } from "../../hooks/useUser";
+import * as S from "../SigninPage/SigninPage.styled";
+
 
 export default function Register() {
   const { login } = useUser();
@@ -34,16 +35,15 @@ export default function Register() {
   };
 
   return (
-    <Wrapper>
-      <div className="container-signup">
-        <div className="modal">
-          <div className="modal__block">
-            <div className="modal__ttl">
+    <S.Wrapper>
+      <S.Container>
+        <S.Modal>
+          <S.ModalBlock>
+            <S.ModalTtl>
               <h2>Регистрация</h2>
-            </div>
-            <form className="modal__form-login" id="formLogUp" action="#">
-              <input
-                className="modal__input first-name"
+            </S.ModalTtl>
+            <S.ModalFormLogin id="formLogUp" action="#">
+              <S.ModalInput
                 type="text"
                 onChange={handleInputChange}
                 name="first-name"
@@ -51,8 +51,7 @@ export default function Register() {
                 value={registerData.name}
                 placeholder="Имя"
               />
-              <input
-                className="modal__input login"
+              <S.ModalInput
                 type="text"
                 onChange={handleInputChange}
                 name="login"
@@ -60,8 +59,7 @@ export default function Register() {
                 value={registerData.login}
                 placeholder="Эл. почта"
               />
-              <input
-                className="modal__input password-first"
+              <S.ModalInput
                 type="password"
                 onChange={handleInputChange}
                 name="password"
@@ -69,23 +67,22 @@ export default function Register() {
                 id="passwordFirst"
                 placeholder="Пароль"
               />
-              <button
+              <S.ModalButtonEnter
                 onClick={handleRegister}
-                className="modal__btn-signup-ent _hover01"
                 id="SignUpEnter"
               >
-                <a href="../main.html">Зарегистрироваться</a>{" "}
-              </button>
-              <div className="modal__form-group">
+                Зарегистрироваться
+              </S.ModalButtonEnter>
+              <S.ModalFormGroup>
                 <p>
                   Уже есть аккаунт?{" "}
                   <Link to={appRoutes.SIGNIN}>Войдите здесь</Link>
                 </p>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </Wrapper>
+              </S.ModalFormGroup>
+            </S.ModalFormLogin>
+          </S.ModalBlock>
+        </S.Modal>
+      </S.Container>
+    </S.Wrapper>
   );
 }

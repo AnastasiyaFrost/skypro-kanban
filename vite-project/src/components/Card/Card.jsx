@@ -4,7 +4,7 @@ import * as S from "./Card.styled";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale/ru";
 
-export default function Card({ id, topic, title, date }) {
+export default function Card({ id, topic, title, date, status }) {
   return (
     <Link to={`task/${id}`}>
       <S.CardsItem>
@@ -21,7 +21,7 @@ export default function Card({ id, topic, title, date }) {
             </S.CardBtn>
           </S.CardGroup>
           <S.CardContent>
-            <S.CardTitle>{title}</S.CardTitle>
+            <S.CardTitle status={status}>{title}</S.CardTitle>
             <S.CardDate>
               <S.CardDateSvg
                 xmlns="http://www.w3.org/2000/svg"

@@ -20,6 +20,7 @@ export default function PopBrowse() {
     description: poppingTask.description,
     topic: poppingTask.topic,
     date: poppingTask.date,
+    status: poppingTask.status
   });
   const [isEdit, setIsEdit] = useState(false);
   const [selectedDate, setSelectedDate] = useState(poppingTask.date);
@@ -38,11 +39,12 @@ export default function PopBrowse() {
     e.preventDefault();
     const taskData = {
       ...newTask,
+      _id: poppingTask._id,
       date: selectedDate,
     };
     console.log({ taskData });
 
-    await editTodo({ token: user.token }, taskData)
+    await editTodo({ token: user.token }, { taskData })
       .then((todos) => {
         console.log(todos.tasks);
         setCards(todos.tasks);
@@ -279,7 +281,9 @@ export default function PopBrowse() {
                   </button>
                   <button
                     className="_btn-bor _hover03"
-                    onClick={navigate(appRoutes.MAIN)}
+                    onClick={() => {
+                      navigate(appRoutes.MAIN);
+                    }}
                   >
                     Отменить
                   </button>
@@ -303,7 +307,9 @@ export default function PopBrowse() {
                     Удалить задачу
                   </button>
                   <button
-                    onClick={navigate(appRoutes.MAIN)}
+                    onClick={() => {
+                      navigate(appRoutes.MAIN);
+                    }}
                     className="_btn-bg _hover01"
                   >
                     Закрыть

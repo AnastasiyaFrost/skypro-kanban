@@ -15,6 +15,7 @@ export default function Column({ title, cards }) {
             topic={card.topic}
             title={card.title}
             date={card.date}
+            status={card.status}
           />
         ))}
       </ColumnCards>
