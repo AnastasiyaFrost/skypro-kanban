@@ -6,7 +6,10 @@ import Calendar from "../../Calendar/Calendar";
 import { deleteTodo, editTodo } from "../../../api";
 import { useUser } from "../../../hooks/useUser";
 import { topicHeader } from "../../../lib/topic";
-import { CardTopic } from "../../Card/Card.styled";
+import { CardTopic, TopicText } from "../../Card/Card.styled";
+import * as B from "./PopBrowse.styled";
+import * as C from "../PopNewCard/PopNewCard.styled";
+import { BlueButton, SubTtl, TransparentButton } from "../../../styled/common/Common.styled";
 
 export default function PopBrowse() {
   const { cards, setCards, setIsLoading } = useTasks();
@@ -20,7 +23,7 @@ export default function PopBrowse() {
     description: poppingTask.description,
     topic: poppingTask.topic,
     date: poppingTask.date,
-    status: poppingTask.status
+    status: poppingTask.status,
   });
   const [isEdit, setIsEdit] = useState(false);
   const [selectedDate, setSelectedDate] = useState(poppingTask.date);
@@ -68,16 +71,25 @@ export default function PopBrowse() {
         alert(error.message);
       });
   };
+  const handleEditCancel = () => {
+    setNewTask({
+      title: poppingTask.title,
+      description: poppingTask.description,
+      topic: poppingTask.topic,
+      date: poppingTask.date,
+      status: poppingTask.status,
+    });
+    setIsEdit(false);
+  }
 
   return (
-    <div className="pop-browse" id="popBrowse">
-      <div className="pop-browse__container">
-        <div className="pop-browse__block">
-          <div className="pop-browse__content">
-            <div className="pop-browse__top-block">
+    <B.PopBrowseDiv>
+      <C.Container>
+        <C.Block>
+          <B.Content>
+            <B.TopBlock>
               {isEdit ? (
-                <input
-                  className="form-new__input"
+                <C.FormNewInput
                   type="text"
                   onChange={handleInputChange}
                   value={newTask.title}
@@ -87,82 +99,82 @@ export default function PopBrowse() {
                   autoFocus=""
                 />
               ) : (
-                <h3 className="pop-browse__ttl">{poppingTask.title}</h3>
+                <B.Ttl>{poppingTask.title}</B.Ttl>
               )}
-              <div className="categories__theme theme-top _active-category">
+              <B.ActiveCategory>
                 <CardTopic $themeColor={topicHeader[poppingTask.topic]}>
-                  {poppingTask.topic}
+                  <TopicText>{poppingTask.topic}</TopicText>
                 </CardTopic>
-              </div>
-            </div>
-            <div className="pop-browse__status status">
-              <p className="status__p subttl">Статус</p>
+              </B.ActiveCategory>
+            </B.TopBlock>
+            <B.Status>
+              <B.StatusP>Статус</B.StatusP>
               {isEdit ? (
-                <div className="status__themes">
-                  <input
-                    type="radio"
-                    id="radio1"
-                    name="status"
-                    value="Без статуса"
-                    onChange={handleInputChange}
-                  />
-                  <label htmlFor="radio1" className="status__theme _gray">
-                    Без статуса
-                  </label>
+                <B.StatusThemes>
+                  {/* <B.ActiveStatus>
+                    <input
+                      type="radio"
+                      id="radio1"
+                      name="status"
+                      value="Без статуса"
+                      onChange={handleInputChange}
+                    />
+                    <B.StatusTheme htmlFor="radio1">Без статуса</B.StatusTheme>
+                  </B.ActiveStatus> */}
 
-                  <input
-                    type="radio"
-                    id="radio2"
-                    name="status"
-                    value="Нужно сделать"
-                    onChange={handleInputChange}
-                  />
-                  <label htmlFor="radio2" className="status__theme">
-                    Нужно сделать
-                  </label>
+                  <B.ActiveStatus>
+                    <input
+                      type="radio"
+                      id="radio2"
+                      name="status"
+                      value="Нужно сделать"
+                      onChange={handleInputChange}
+                    />
+                    <B.StatusTheme htmlFor="radio2">
+                      Нужно сделать
+                    </B.StatusTheme>
+                  </B.ActiveStatus>
 
-                  <input
-                    className="status__theme"
-                    type="radio"
-                    id="radio3"
-                    name="status"
-                    value="В работе"
-                    onChange={handleInputChange}
-                  />
-                  <label htmlFor="radio3" className="status__theme">
-                    В работе
-                  </label>
+                  <B.ActiveStatus>
+                    <input
+                      type="radio"
+                      id="radio3"
+                      name="status"
+                      value="В работе"
+                      onChange={handleInputChange}
+                    />
+                    <B.StatusTheme htmlFor="radio3">В работе</B.StatusTheme>
+                  </B.ActiveStatus>
 
-                  <input
-                    className="status__theme"
-                    type="radio"
-                    id="radio4"
-                    name="status"
-                    value="Тестирование"
-                    onChange={handleInputChange}
-                  />
-                  <label htmlFor="radio4" className="status__theme">
-                    Тестирование
-                  </label>
+                  <B.ActiveStatus>
+                    <input
+                      type="radio"
+                      id="radio4"
+                      name="status"
+                      value="Тестирование"
+                      onChange={handleInputChange}
+                    />
+                    <B.StatusTheme htmlFor="radio4">Тестирование</B.StatusTheme>
+                  </B.ActiveStatus>
 
-                  <input
-                    className="status__theme"
-                    type="radio"
-                    id="radio5"
-                    name="status"
-                    value="Готово"
-                    onChange={handleInputChange}
-                  />
-                  <label htmlFor="radio5" className="status__theme">
-                    Готово
-                  </label>
-                </div>
+                  <B.ActiveStatus>
+                    <input
+                      className="status__theme"
+                      type="radio"
+                      id="radio5"
+                      name="status"
+                      value="Готово"
+                      onChange={handleInputChange}
+                    />
+                    <B.StatusTheme htmlFor="radio5">Готово</B.StatusTheme>
+                  </B.ActiveStatus>
+                </B.StatusThemes>
               ) : (
-                <div className="status__themes">
-                  <div className="status__theme">
+                <B.StatusThemes>
+                  <B.StatusTheme>
                     <p>{poppingTask.status}</p>
-                  </div>
-                </div>
+                  </B.StatusTheme>
+                </B.StatusThemes>
               )}
               {/* // <div className="status__themes">
                 //   <div className="status__theme">
@@ -182,86 +194,84 @@ export default function PopBrowse() {
                 //   </div>
                 // </div>
               // )} */}
-            </div>
-            <div className="pop-browse__wrap">
-              <form
-                className="pop-browse__form form-browse"
-                id="formBrowseCard"
-                action="#"
-              >
-                <div className="form-browse__block">
-                  <label htmlFor="textArea01" className="subttl">
-                    Описание задачи
-                  </label>
+            </B.Status>
+            <C.Wrap>
+              <C.Form id="formBrowseCard" action="#">
+                <C.FormNewBlock>
+                  <SubTtl htmlFor="textArea01">Описание задачи</SubTtl>
                   {isEdit ? (
-                    <textarea
-                      className="form-browse__area"
+                    <B.FormArea
                       name="description"
                       onChange={handleInputChange}
                       id="textArea01"
                       value={newTask.description}
                       placeholder="Введите описание задачи..."
-                    ></textarea>
+                    ></B.FormArea>
                   ) : (
-                    <textarea
-                      className="form-browse__area"
+                    <B.FormArea
                       name="description"
                       onChange={handleInputChange}
                       disabled
                       id="textArea01"
                       value={newTask.description}
                       placeholder="Введите описание задачи..."
-                    ></textarea>
+                    ></B.FormArea>
                   )}
-                </div>
-              </form>
+                </C.FormNewBlock>
+              </C.Form>
               {isEdit ? (
                 <Calendar
                   selectedDate={selectedDate}
                   setSelectedDate={setSelectedDate}
                 />
               ) : (
-                <Calendar />
+                <Calendar selectedDate={poppingTask.date} />
               )}
-            </div>
+            </C.Wrap>
             {isEdit && (
-              <div className="pop-new-card__categories categories">
-                <p className="categories__p subttl">Категория</p>
-                <div className="categories__themes">
-                  <input
-                    type="radio"
-                    id="radio1"
-                    name="topic"
-                    value="Web Design"
-                    onChange={handleInputChange}
-                  />
-                  <label htmlFor="radio1" className="categories__theme _orange">
-                    Web Design
-                  </label>
+              <C.Categories>
+                <C.CategoriesP>Категория</C.CategoriesP>
+                <C.CategoriesThemes>
+                  <C.Orange>
+                    <input
+                      type="radio"
+                      id="radio6"
+                      name="topic"
+                      value="Web Design"
+                      onChange={handleInputChange}
+                    />
+                    <C.CategoriesTheme htmlFor="radio6">
+                      Web Design
+                    </C.CategoriesTheme>
+                  </C.Orange>
 
-                  <input
-                    type="radio"
-                    id="radio2"
-                    name="topic"
-                    value="Research"
-                    onChange={handleInputChange}
-                  />
-                  <label htmlFor="radio2" className="categories__theme _green">
-                    Research
-                  </label>
+                  <C.Green>
+                    <input
+                      type="radio"
+                      id="radio7"
+                      name="topic"
+                      value="Research"
+                      onChange={handleInputChange}
+                    />
+                    <C.CategoriesTheme htmlFor="radio7">
+                      Research
+                    </C.CategoriesTheme>
+                  </C.Green>
 
-                  <input
-                    type="radio"
-                    id="radio3"
-                    name="topic"
-                    value="Copywriting"
-                    onChange={handleInputChange}
-                  />
-                  <label htmlFor="radio3" className="categories__theme _purple">
-                    Copywriting
-                  </label>
-                </div>
-              </div>
+                  <C.Purple>
+                    <input
+                      type="radio"
+                      id="radio8"
+                      name="topic"
+                      value="Copywriting"
+                      onChange={handleInputChange}
+                    />
+                    <C.CategoriesTheme htmlFor="radio8">
+                      Copywriting
+                    </C.CategoriesTheme>
+                  </C.Purple>
+                </C.CategoriesThemes>
+              </C.Categories>
             )}
             {/* <div className="theme-down__categories theme-down">
               <p className="categories__p subttl">Категория</p>
@@ -269,81 +279,43 @@ export default function PopBrowse() {
                 <p className="_orange">Web Design</p>
               </div>
             </div> */}
-
-            {isEdit ? (
-              <div className="pop-browse__btn-edit">
-                <div className="btn-group">
-                  <button
-                    className="_btn-bg _hover01"
-                    onClick={handleFormSubmit}
-                  >
-                    Сохранить
-                  </button>
-                  <button
-                    className="_btn-bor _hover03"
-                    onClick={() => {
-                      navigate(appRoutes.MAIN);
-                    }}
-                  >
+            <B.Btns>
+              {isEdit ? (
+                <B.BtnGroup>
+                  <BlueButton onClick={handleFormSubmit}>Сохранить</BlueButton>
+                  <TransparentButton onClick={handleEditCancel}>
                     Отменить
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <div className="pop-browse__btn-browse ">
-                <div className="btn-group">
-                  <button
-                    className="_btn-bor _hover03"
+                  </TransparentButton>
+                  <TransparentButton onClick={handleTaskDelete}>
+                    Удалить задачу
+                  </TransparentButton>
+                </B.BtnGroup>
+              ) : (
+                <B.BtnGroup>
+                  <TransparentButton
                     onClick={() => {
                       setIsEdit(true);
                     }}
                   >
                     Редактировать задачу
-                  </button>
-                  <button
-                    className="_btn-bor _hover03"
-                    onClick={handleTaskDelete}
-                  >
+                  </TransparentButton>
+                  <TransparentButton onClick={handleTaskDelete}>
                     Удалить задачу
-                  </button>
-                  <button
-                    onClick={() => {
-                      navigate(appRoutes.MAIN);
-                    }}
-                    className="_btn-bg _hover01"
-                  >
-                    Закрыть
-                  </button>
-                </div>
-              </div>
-            )}
+                  </TransparentButton>
+                </B.BtnGroup>
+              )}
 
-            {/* <div className="btn-group">
-                <button className="_btn-bg _hover01" 
+              <BlueButton
                 onClick={() => {
-                      handleFormSubmit;
-                      setIsEdit(false);
-                    }}>
-                  Сохранить
-                </button>
-                <button className="_btn-bor _hover03" 
-                onClick={setIsEdit(false)}>
-                  Отменить
-                </button>
-                </div> */}
-
-            {/* //   <button
-                //     className="_btn-bor _hover03"
-                //     onClick={() => {
-                //       handleFormSubmit;
-                //       setIsEdit(false);
-                //     }}
-                //   >
-                //     Сохранить задачу
-                //   </button> */}
-          </div>
-        </div>
-      </div>
-    </div>
+                  navigate(appRoutes.MAIN);
+                }}
+              >
+                Закрыть
+              </BlueButton>
+            </B.Btns>
+          </B.Content>
+        </C.Block>
+      </C.Container>
+    </B.PopBrowseDiv>
   );
 }

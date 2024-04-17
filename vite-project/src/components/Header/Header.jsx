@@ -3,9 +3,11 @@ import { Container } from "../../styled/common/Common.styled";
 import * as S from "./Header.styled";
 import { useState } from "react";
 import { appRoutes } from "../../lib/appRoutes";
+import { useUser } from "../../hooks/useUser";
 
 export default function Header() {
   const [isOpened, setIsOpened] = useState(false);
+  const { user } = useUser();
   function togglePopup () {
     setIsOpened ((prev) => !prev);
   }
@@ -27,20 +29,19 @@ export default function Header() {
           <S.HeaderNav>
             <Link to={"/task/add"}>
               <S.HeaderMainNewCard id="btnMainNew">
-                <S.HeaderBtnMainNewCardText>
+                {/* <S.HeaderBtnMainNewCardText> */}
                   Создать новую задачу
-                </S.HeaderBtnMainNewCardText>
+                {/* </S.HeaderBtnMainNewCardText> */}
               </S.HeaderMainNewCard>
             </Link>
-            <S.HeaderUser onClick={togglePopup} href="#user-set-target">
-              Ivan Ivanov
+            <S.HeaderUser onClick={togglePopup}>
+              {user.name}
             </S.HeaderUser>
-            {isOpened && (
-              <S.HeaderPopUserSet id="user-set-target">
-                {/* <a href="">x</a> */}
-                <S.HeaderPopUserSetName>Ivan Ivanov</S.HeaderPopUserSetName>
+            {(isOpened)&&(
+              <S.HeaderPopUserSet>
+                <S.HeaderPopUserSetName>{user.name}</S.HeaderPopUserSetName>
                 <S.HeaderPopUserSetMail>
-                  ivan.ivanov@gmail.com
+                  {user.login}
                 </S.HeaderPopUserSetMail>
                 <S.HeaderPopUserSetTheme>
                   <S.HeaderPopUserSetThemeText>

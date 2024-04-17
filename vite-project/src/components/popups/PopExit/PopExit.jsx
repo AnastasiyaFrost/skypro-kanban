@@ -1,42 +1,39 @@
 import { useNavigate } from "react-router-dom";
 import { appRoutes } from "../../../lib/appRoutes";
 import { useUser } from "../../../hooks/useUser";
+import * as E from "./PopExit.styled";
 
 export default function PopExit() {
   const { logout } = useUser();
   const navigate = useNavigate();
   return (
-    <div className="pop-exit" id="popExit">
-      <div className="pop-exit__container">
-        <div className="pop-exit__block">
-          <div className="pop-exit__ttl">
-            <h2>Выйти из аккаунта?</h2>
-          </div>
-          <form className="pop-exit__form" id="formExit" action="#">
-            <div className="pop-exit__form-group">
-              
-                <span
-                  onClick={() => {
-                    logout();
-                    navigate(appRoutes.SIGNIN);
-                  }}
-                  className="pop-exit__exit-yes _hover01"
-                  id="exitYes"
-                >
-                  Да, выйти
-                </span>
-              
-                <span
-                  onClick={()=>{navigate(appRoutes.MAIN)}}
-                  className="pop-exit__exit-no _hover03"
-                  id="exitNo"
-                >
-                  Нет, остаться
-                </span>
-            </div>
+    <E.PopExitDiv>
+      <E.Container>
+        <E.Block>
+          <E.Ttl>Выйти из аккаунта?</E.Ttl>
+
+          <form action="#">
+            <E.FormGroup>
+              <E.ExitYes
+                onClick={() => {
+                  logout();
+                  navigate(appRoutes.SIGNIN);
+                }}
+              >
+                <p>Да, выйти</p>
+              </E.ExitYes>
+
+              <E.ExitNo
+                onClick={() => {
+                  navigate(appRoutes.MAIN);
+                }}
+              >
+                <p>Нет, остаться</p>
+              </E.ExitNo>
+            </E.FormGroup>
           </form>
-        </div>
-      </div>
-    </div>
+        </E.Block>
+      </E.Container>
+    </E.PopExitDiv>
   );
 }

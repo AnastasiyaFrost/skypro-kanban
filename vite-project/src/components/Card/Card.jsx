@@ -21,7 +21,7 @@ export default function Card({ id, topic, title, date, status }) {
             </S.CardBtn>
           </S.CardGroup>
           <S.CardContent>
-            <S.CardTitle status={status}>{title}</S.CardTitle>
+            <S.CardTitle $status={status}>{title}</S.CardTitle>
             <S.CardDate>
               <S.CardDateSvg
                 xmlns="http://www.w3.org/2000/svg"

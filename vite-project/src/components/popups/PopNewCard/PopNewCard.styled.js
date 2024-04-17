@@ -12,6 +12,12 @@ export const PopNewCardDiv = styled.div`
   top: 0;
   left: 0;
   z-index: 6;
+  &:target {
+    display: block;
+  }
+  @media screen and (max-width: 660px) {
+    top: 70px;
+  }
 `;
 
 export const Container = styled.div`
@@ -24,6 +30,14 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.4);
+  @media screen and (max-width: 660px) {
+    padding: 0;
+    justify-content: flex-start;
+  }
+  @media screen and (max-width: 495px) {
+    padding: 0;
+    justify-content: flex-start;
+  }
 `;
 
 export const Block = styled.div`
@@ -36,6 +50,12 @@ export const Block = styled.div`
   border-radius: 10px;
   border: 0.7px solid #d4dbe5;
   position: relative;
+  @media screen and (max-width: 660px) {
+    border-radius: 0;
+  }
+  @media screen and (max-width: 495px) {
+    padding: 20px 16px 32px;
+  }
 `;
 
 export const Content = styled.div`
@@ -66,6 +86,9 @@ export const Wrap = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+  @media screen and (max-width: 660px) {
+    display: block;
+  }
 `;
 
 export const Form = styled.form`
@@ -73,6 +96,11 @@ export const Form = styled.form`
   width: 100%;
   display: block;
   margin-bottom: 20px;
+  @media screen and (max-width: 495px) {
+    max-width: 100%;
+    width: 100%;
+    display: block;
+  }
 `;
 export const FormNewBlock = styled.div`
   display: flex;
@@ -132,6 +160,10 @@ export const FormNewArea = styled.textarea`
     line-height: 1px;
     color: #94a6be;
     letter-spacing: -0.14px;
+  }
+  @media screen and (max-width: 495px) {
+    max-width: 100%;
+    height: 34px;
   }
 `;
 

@@ -14,7 +14,7 @@ export const SubTtl = styled.label`
   line-height: 1;
 `;
 
-export const BlueButton = styled.span`
+export const BlueButton = styled.button`
   border-radius: 4px;
   background: #565eef;
   border: none;

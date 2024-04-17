@@ -90,8 +90,8 @@ export const CardTitle = styled.h3`
   line-height: 18px;
   color: #000000;
   margin-bottom: 10px;
-  ${({ status }) =>
-    status === "Готово" &&
+  ${({ $status }) =>
+    $status === "Готово" &&
     `
     text-decoration: line-through;
   `}/* text-decoration: ${(status) => {
