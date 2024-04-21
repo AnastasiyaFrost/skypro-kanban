@@ -7,7 +7,6 @@ import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import MainPage from "./pages/MainPage/MainPage";
 import TaskPage from "./pages/TaskPage/TaskPage";
 import ExitPage from "./pages/ExitPage/ExitPage";
-import "./App.css";
 import NewTaskPage from "./pages/NewTaskPage/NewTaskPage";
 import { GlobalStyle } from "./styled/common/GlobalStyle.styled.js";
 
