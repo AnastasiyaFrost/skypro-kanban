@@ -47,6 +47,9 @@ export const HeaderMainNewCard = styled.div`
   line-height: 1;
   font-weight: 500;
   margin-right: 20px;
+  text-align: center;
+  justify-content: center;
+  padding: 10px 14px;
   &:hover {
     background-color: #33399b;
   }
@@ -98,7 +101,7 @@ export const HeaderUser = styled.a`
 `;
 
 export const HeaderPopUserSet = styled.div`
-  display: none;
+  
   position: absolute;
   top: 61px;
   right: 0;
@@ -116,7 +119,7 @@ export const HeaderPopUserSet = styled.div`
   }
 `;
 
-export const HeaderPopUserSetBtn = styled.span`
+export const HeaderPopUserSetBtn = styled.button`
   width: 72px;
   height: 30px;
   background: transparent;

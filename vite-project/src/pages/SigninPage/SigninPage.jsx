@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
-import Wrapper from "../../components/Wrapper/Wrapper";
 import { appRoutes } from "../../lib/appRoutes";
 import { useState } from "react";
 import { signin } from "../../api";
 import { useUser } from "../../hooks/useUser";
+import * as S from "./SigninPage.styled";
 
 export default function Signin() {
   const { login } = useUser();
@@ -29,16 +29,15 @@ export default function Signin() {
       });
   };
   return (
-    <Wrapper>
-      <div className="container-signin">
-        <div className="modal">
-          <div className="modal__block">
-            <div className="modal__ttl">
-              <h2>Вход</h2>
-            </div>
-            <div className="modal__form-login" id="formLogIn" action="#">
-              <input
-                className="modal__input"
+    <S.Wrapper>
+      <S.Container>
+        <S.Modal>
+          <S.ModalBlock>
+            <S.ModalTtl>
+              Вход
+            </S.ModalTtl>
+            <S.ModalFormLogin id="formLogIn" action="#">
+              <S.ModalInput
                 type="text"
                 onChange={handleInputChange}
                 name="login"
@@ -46,8 +45,7 @@ export default function Signin() {
                 id="formlogin"
                 placeholder="Эл. почта"
               />
-              <input
-                className="modal__input"
+              <S.ModalInput
                 type="password"
                 onChange={handleInputChange}
                 name="password"
@@ -56,22 +54,21 @@ export default function Signin() {
                 placeholder="Пароль"
               />
 
-              <button
+              <S.ModalButtonEnter
                 onClick={handleLogin}
-                className="modal__btn-enter _hover01"
                 id="btnEnter"
               >
                 Войти
-              </button>
+              </S.ModalButtonEnter>
 
-              <div className="modal__form-group">
+              <S.ModalFormGroup>
                 <p>Нужно зарегистрироваться?</p>
                 <Link to={appRoutes.SIGNUP}>Регистрируйтесь здесь</Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </Wrapper>
+              </S.ModalFormGroup>
+            </S.ModalFormLogin>
+          </S.ModalBlock>
+        </S.Modal>
+      </S.Container>
+    </S.Wrapper>
   );
 }

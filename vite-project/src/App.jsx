@@ -7,12 +7,14 @@ import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import MainPage from "./pages/MainPage/MainPage";
 import TaskPage from "./pages/TaskPage/TaskPage";
 import ExitPage from "./pages/ExitPage/ExitPage";
-import "./App.css";
 import NewTaskPage from "./pages/NewTaskPage/NewTaskPage";
+import { GlobalStyle } from "./styled/common/GlobalStyle.styled.js";
 
 export default function App() {
   
   return (
+    <>
+    <GlobalStyle/>
     <Routes>
       <Route element={<PrivateRoute />}>
         <Route path={appRoutes.MAIN} element={<MainPage />}>
@@ -26,5 +28,6 @@ export default function App() {
       <Route path={appRoutes.SIGNUP} element={<Register />} />
       <Route path={appRoutes.NOT_FOUND} element={<NotFound />} />
     </Routes>
+    </>
   );
 }
